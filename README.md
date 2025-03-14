@@ -7,7 +7,7 @@ Food and nutrition play a significant role in people’s choices when selecting 
 
 In this project, we will investigate whether high-carb, low-protein recipes receive significantly different ratings compared to other recipes.
 
-### Why Does This Matter?
+### Why Does This Matter 🤔?
 Understanding how carbohydrates and protein impact recipe ratings can provide valuable insights for different groups:
 
 1. 🍽️ Home Cooks & Food Influencers – Knowing which types of recipes get higher ratings can help in creating meals that people love. If high-carb, low-protein recipes are rated lower, food bloggers might adjust their ingredient choices to appeal to a wider audience.
@@ -57,7 +57,8 @@ For data cleaning, to make our analysis more efficient and valid to use, we did 
 
 1. **Left merge the `recipes` and `reviews` df left_on = 'id' and right_on = 'recipe_id'.**
 
-   - From this merge, we were able to match the recipe from both separate dataframes, and having one big dataframe with 234429 rows that has both the recipe information and the ratings. 
+   - From this merge, we were able to match the recipe from both separate dataframes, and having one big dataframe with 234429 rows that has both the recipe information and the ratings.
+     
 
    - | Column             | Description |
      | :----------------- | :---------- |
@@ -78,43 +79,46 @@ For data cleaning, to make our analysis more efficient and valid to use, we did 
      | `'date'`           | object      |
      | `'rating'`         | float64     |
      | `'review'`         | object      |
+     
 
 2. **Fill all ratings of 0 with np.nan.**
 
-   - Rating is scaled from 1 to 5, 1 meaning the lowest rating while 5 means the highest rating. We replace all 0s in the ratings column with NaN values. The 0 represents no rating given, but it will influence any calculations we perform with the ratings.
+  - Rating is scaled from 1 to 5, 1 meaning the lowest rating while 5 means the highest rating. We replace all 0s in the ratings column with NaN values. The 0 represents no rating given, but it will influence any calculations we perform with the ratings.
 
-3. **Calculate the average ratings for each recipe and store it in avg_recipe_ratings**
+
+4. **Calculate the average ratings for each recipe and store it in avg_recipe_ratings**
 
    - Merges the recipe_ratings dataframe with the avg_recipe_rating dataset to include the average rating of each recipe, creating a column for the average rating.
    - For the purposes of analyzing the missingness and baseline, created a copy of the recipe_rating dataframe.
      
 
-4. **Only wanted certain columns, so we only retrieved `id` (renamed to `recipe_id`), `rating`, `avg_rating`, and `nutrition`; dropping the other columns.**
+5. **Only wanted certain columns, so we only retrieved `id` (renamed to `recipe_id`), `rating`, `avg_rating`, and `nutrition`; dropping the other columns.**
    - |  Column            | Description |
      | :----------------- | :---------- |
      | `'recipe_id'`      | int64       |
      | `'rating'`         | float64     |
      | `'avg_rating'`     | float64     |
      | `'nutrition'`      | object      |
-     
 
-  
-5. **Observed that the `nutrition` column contains string format, so we converted so it becomes a list.**
+       
+6. **Observed that the `nutrition` column contains string format, so we converted so it becomes a list.**
 
    - Separated each value in the list [calories (#), total fat (PDV), sugar (PDV), sodium (PDV), protein (PDV), saturated fat (PDV), carbohydrates (PDV)] to its category (column) by indexing the `nutrition` column. 
 
 
 #### Result
-- `merged_df`
-  | Index | Name                                      | ID      | Minutes | Contributor ID | Submitted   | Tags                                                 | Nutrition                                    | Steps | Description                                   | Ingredients                                | Num Ingredients | User ID  | Recipe ID | Date       | Rating | Review                                          | Avg Rating |
-|-------|------------------------------------------|---------|---------|---------------|-------------|-----------------------------------------------------|---------------------------------------------|-------|---------------------------------------------|-------------------------------------------|----------------|----------|-----------|------------|--------|-------------------------------------------------|------------|
-| 0     | 1 brownies in the world best ever      | 333281  | 40      | 985201        | 2008-10-27  | ['60-minutes-or-less', 'time-to-make', ...]         | [138.4, 10.0, 50.0, 3.0, 3.0, 19.0, 6.0]   | 10    | These are the most chocolatey, moist, ...  | ['bittersweet chocolate', 'unsalted ...] | 9              | 386585.0 | 333281.0  | 2008-11-19 | 4.0    | These were pretty good, but took fore...  | 4.0        |
-| 1     | 1 in Canada chocolate chip cookies     | 453467  | 45      | 1848091       | 2011-04-11  | ['60-minutes-or-less', 'time-to-make', ...]         | [595.1, 46.0, 211.0, 22.0, 13.0, 51.0, 26.0] | 12    | This is the recipe that we use at my ...  | ['white sugar', 'brown sugar', 'salt', ...] | 11             | 424680.0 | 453467.0  | 2012-01-26 | 5.0    | Originally I was gonna cut the recipe ... | 5.0        |
-| 2     | 412 broccoli casserole                 | 306168  | 40      | 50969         | 2008-05-30  | ['60-minutes-or-less', 'time-to-make', ...]         | [194.8, 20.0, 6.0, 32.0, 22.0, 36.0, 3.0]   | 6     | Since there are already 411 recipes f...  | ['frozen broccoli cuts', 'cream of ...] | 9              | 29782.0  | 306168.0  | 2008-12-31 | 5.0    | This was one of the best broccoli cas... | 5.0        |
-| 3     | 412 broccoli casserole                 | 306168  | 40      | 50969         | 2008-05-30  | ['60-minutes-or-less', 'time-to-make', ...]         | [194.8, 20.0, 6.0, 32.0, 22.0, 36.0, 3.0]   | 6     | Since there are already 411 recipes f...  | ['frozen broccoli cuts', 'cream of ...] | 9              | 1196280.0| 306168.0  | 2009-04-13 | 5.0    | I made this for my son's first birthd... | 5.0        |
-| 4     | 412 broccoli casserole                 | 306168  | 40      | 50969         | 2008-05-30  | ['60-minutes-or-less', 'time-to-make', ...]         | [194.8, 20.0, 6.0, 32.0, 22.0, 36.0, 3.0]   | 6     | Since there are already 411 recipes f...  | ['frozen broccoli cuts', 'cream of ...] | 9              | 768828.0 | 306168.0  | 2013-08-02 | 5.0    | Loved this. Be sure to completely tha... | 5.0        |
-- `recipe_rating`
-| Index  | recipe_id | rating | avg_rating | calories | total_fat | sugar  | sodium | protein | saturated_fat | carbohydrates |
+- `merged_df`.head()
+| Index | Recipe Name                                | Recipe ID | Rating | Avg Rating | Calories | Protein | Carbohydrates |
+|-------|-------------------------------------------|-----------|--------|------------|----------|---------|--------------|
+| 0     | 1 brownies in the world best ever        | 333281    | 4.0    | 4.0        | 138.4    | 3.0     | 6.0          |
+| 1     | 1 in Canada chocolate chip cookies       | 453467    | 5.0    | 5.0        | 595.1    | 13.0    | 26.0         |
+| 2     | 412 broccoli casserole                   | 306168    | 5.0    | 5.0        | 194.8    | 22.0    | 3.0          |
+| 3     | 412 broccoli casserole                   | 306168    | 5.0    | 5.0        | 194.8    | 22.0    | 3.0          |
+| 4     | 412 broccoli casserole                   | 306168    | 5.0    | 5.0        | 194.8    | 22.0    | 3.0          |
+
+
+- `recipe_rating`.head()
+| Index  | recipe_id| rating | avg_rating | calories | total_fat | sugar  | sodium | protein | saturated_fat | carbohydrates |
 |--------|----------|--------|------------|----------|-----------|--------|--------|---------|---------------|---------------|
 | 230    | 360086   | 5.0    | 4.75       | 7016.6   | 652.0     | 2109.0 | 260.0  | 263.0   | 568.0         | 245.0         |
 | 231    | 360086   | 4.0    | 4.75       | 7016.6   | 652.0     | 2109.0 | 260.0  | 263.0   | 568.0         | 245.0         |
