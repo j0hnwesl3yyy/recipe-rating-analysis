@@ -3,9 +3,9 @@
 Authors: Ananya Krishnan and JohnWesley Pabalate 
 
 ## Introduction
-Food and nutrition play a crucial role in people’s choices when selecting recipes. Some individuals may prefer high-carb meals, while others prioritize protein-rich options. But do these macronutrient differences influence how people rate recipes?
+Food and nutrition play a significant role in people’s choices when selecting recipes. Some individuals may prefer high-carb meals, while others prioritize protein-rich options. But do these macronutrient differences influence how people rate recipes?
 
-In this project, we investigate whether high-carb, low-protein recipes receive significantly different ratings compared to other recipes.
+In this project, we will investigate whether high-carb, low-protein recipes receive significantly different ratings compared to other recipes.
 
 ### Why Does This Matter?
 Understanding how carbohydrates and protein impact recipe ratings can provide valuable insights for different groups:
@@ -33,7 +33,7 @@ The first dataframe (df) `recipes` was extracted from the **RAW_recipes.csv** fi
 | `'ingredients'`    | Text for recipe ingredients                                                                                                                                                                       |
 | `'n_ingredients'`  | Number of ingredients in recipe                                                                                                                                                                   |
 
-The first dataframe (df) `reviews` was extracted from the **RAW_interaction.csv** file and it contains 83782 rows along with these columns listed below:
+The first dataframe (df) `reviews` was extracted from the **RAW_interaction.csv** file and it contains 731927 rows along with these columns listed below:
 
 | Column        | Description         |
 | :------------ | :------------------ |
@@ -45,24 +45,20 @@ The first dataframe (df) `reviews` was extracted from the **RAW_interaction.csv*
 
 The key columns relevant to our analysis include:
 
-- `name` – The title of the recipe.
+- `recipe_id` and `id` – A unique identifier for each recipe.
 - `nutrition` – A list containing nutritional values such as calories, fat, sugar, sodium, protein, carbohydrates, and more.
 - `rating` – The user rating given to the recipe.
-- `recipe_id` – A unique identifier for each recipe.
-
+  
 Overall, by analyzing recipe ratings, we can find trends that help people make better food choices, guide businesses in developing better products, and improve our understanding of how nutrition influences preferences!
 
 ## Data Cleaning and Exploratory Data Analysis
 
-To make our analysis of the dataset more efficient and convenient, we conducted the following data cleaning steps.
+For data cleaning, to make our analysis more efficient and valid to use, we did the following: 
 
-1. Left merge the recipes and interactions datasets on id and recipe_id.
+1. **Left merge the `recipes` and `reviews` df left_on = 'id' and right_on = 'recipe_id'.**
 
-   - This step helps match the unique recipes with their rating and review.
+   - From this merge, we were able to match the recipe from both separate dataframes, and having one big dataframe with 234429 rows that has both the recipe information and the ratings. 
 
-1. Check data types of all the columns.
-
-   - This step helps us evaluate what data cleaning steps are appropriate for the dataset and if we need to conduct data type conversion.
    - | Column             | Description |
      | :----------------- | :---------- |
      | `'name'`           | object      |
@@ -83,73 +79,54 @@ To make our analysis of the dataset more efficient and convenient, we conducted 
      | `'rating'`         | float64     |
      | `'review'`         | object      |
 
-1. Fill all ratings of 0 with np.nan.
+2. **Fill all ratings of 0 with np.nan.**
 
-   - Rating is generally on a scale from 1 to 5, 1 meaning the lowest rating while 5 means the highest rating. With that being said, a rating of 0 indicates missing values in rating. Thus, to avoid bias in the ratings, we filled the value 0 with np.nan.
+   - Rating is scaled from 1 to 5, 1 meaning the lowest rating while 5 means the highest rating. We replace all 0s in the ratings column with NaN values. The 0 represents no rating given, but it will influence any calculations we perform with the ratings.
 
-1. Add column `'average_rating'` containing average rating per recipe.
+3. **Calculate the average ratings for each recipe and store it in avg_recipe_ratings**
 
-   - Since a recipe can have numerous ratings from different users, we take an average of all the ratings to get a more comprehensive understanding of the rating of a given recipe.
+   - Merges the recipe_ratings dataframe with the avg_recipe_rating dataset to include the average rating of each recipe, creating a column for the average rating.
+   - For the purposes of analyzing the missingness and baseline, created a copy of the recipe_rating dataframe.
+     
 
-1. Split values in the nutrition column to individual columns of floats.
+4. **Only wanted certain columns, so we only retrieved `id` (renamed to `recipe_id`), `rating`, `avg_rating`, and `nutrition`; dropping the other columns.**
+   - |  Column            | Description |
+     | :----------------- | :---------- |
+     | `'recipe_id'`      | int64       |
+     | `'rating'`         | float64     |
+     | `'avg_rating'`     | float64     |
+     | `'nutrition'`      | object      |
+     
 
-   - Even though the values in the nutrition column look like a list, they are actually objects, which act like strings. Given by the description of the columns of the recipe dataset, we know what each individual values inside the brackets mean. To split up the values, we applied a lambda function then converted the columns to floats. It will allow us to conduct numerical calculations on the columns.
+  
+5. **Observed that the `nutrition` column contains string format, so we converted so it becomes a list.**
 
-1. Convert submitted and date to datetime.
+   - Separated each value in the list [calories (#), total fat (PDV), sugar (PDV), sodium (PDV), protein (PDV), saturated fat (PDV), carbohydrates (PDV)] to its category (column) by indexing the `nutrition` column. 
 
-   - These two columns are both stored as objects initially, so we converted them into datetime to allow us conduct analysis on trends over time if needed.
-
-1. Add `'is_dessert'` to the dataframe
-
-   - `'is_dessert'` is a boolean column checking if the tags of recipes contain 'dessert' since desserts typically have a higher amount of sugar. This step separates the recipes into two groups, ones that are dessert and ones that are not. This provides us another way to compare ratings of recipes with more sugar and ones with less sugar.
-
-1. Add `'prop_sugar'` to the dataframe
-   - prop_sugar is the proportion of sugar of the total calories in a recipe. To calculate this, we use the values in the sugar (PDV) column to divide by 100% to get it in the decimal form. Then, we multiply by 25 to convert the values to grams of sugar since 25 grams of sugar is the 100% daily value (PDV). We got this value of 25 grams from experimenting on food.com with different amounts of sugar in a recipe. The experimentation allows us to understand the nutrition formula used on the website for recipes. Lastly, we multiply by 4 since there are 4 calories in 1 gram of sugar. After all these conversions, we end up with the number of calories of sugar, so we can divide by the total amount of calories in the recipe to get the proportion of sugar of the total calories. This data cleaning step is critical to allow us to make parallel comparisons on the amount of sugar in a recipe without concerns of extremely large values since all the values will be between 0 and 1.
 
 #### Result
-Here are all the columns of the cleaned df.
-
-| Column                  | Description    |
-| :---------------------- | :------------- |
-| `'name'`                | object         |
-| `'id'`                  | int64          |
-| `'minutes'`             | int64          |
-| `'contributor_id'`      | int64          |
-| `'submitted'`           | datetime64[ns] |
-| `'tags'`                | object         |
-| `'nutrition'`           | object         |
-| `'n_steps'`             | int64          |
-| `'steps'`               | object         |
-| `'description'`         | object         |
-| `'ingredients'`         | object         |
-| `'n_ingredients'`       | int64          |
-| `'user_id'`             | float64        |
-| `'recipe_id'`           | float64        |
-| `'date'`                | datetime64[ns] |
-| `'rating'`              | float64        |
-| `'review'`              | object         |
-| `'average rating'`      | object         |
-| `'calories (#)'`        | float64        |
-| `'total fat (PDV)'`     | float64        |
-| `sugar (PDV)'`          | float64        |
-| `'sodium (PDV)'`        | float64        |
-| `'protein (PDV)'`       | float64        |
-| `'saturated fat (PDV)'` | float64        |
-| `'carbohydrates (PDV)'` | float64        |
-| `'is_dessert'`          | bool           |
-| `'prop_sugar'`          | float64        |
-
-
-Our cleaned dataframe ended up with 234429 rows and 27 columns. Here are the first 5 rows of ~unique recipes of our cleaned dataframe for illustration. Since there is a lot of columns for the merged dataframe, we selected the columns that are most relevant to our questions for display. Scroll right to view more columns.
-
-| name                                 |     id |   minutes | submitted           |   rating |   average rating |   calories (#) |   sugar (PDV) | is_dessert   |   prop_sugar |
-|:-------------------------------------|-------:|----------:|:--------------------|---------:|-----------------:|---------------:|--------------:|:-------------|-------------:|
-| 1 brownies in the world    best ever | 333281 |        40 | 2008-10-27 00:00:00 |        4 |                4 |          138.4 |            50 | True         |    0.361272  |
-| 1 in canada chocolate chip cookies   | 453467 |        45 | 2011-04-11 00:00:00 |        5 |                5 |          595.1 |           211 | False        |    0.354562  |
-| 412 broccoli casserole               | 306168 |        40 | 2008-05-30 00:00:00 |        5 |                5 |          194.8 |             6 | False        |    0.0308008 |
-| millionaire pound cake               | 286009 |       120 | 2008-02-12 00:00:00 |        5 |                5 |          878.3 |           326 | True         |    0.371172  |
-| 2000 meatloaf                        | 475785 |        90 | 2012-03-06 00:00:00 |        5 |                5 |          267   |            12 | False        |    0.0449438 |
-
+- `merged_df`
+  | Index | Name                                      | ID      | Minutes | Contributor ID | Submitted   | Tags                                                 | Nutrition                                    | Steps | Description                                   | Ingredients                                | Num Ingredients | User ID  | Recipe ID | Date       | Rating | Review                                          | Avg Rating |
+|-------|------------------------------------------|---------|---------|---------------|-------------|-----------------------------------------------------|---------------------------------------------|-------|---------------------------------------------|-------------------------------------------|----------------|----------|-----------|------------|--------|-------------------------------------------------|------------|
+| 0     | 1 brownies in the world best ever      | 333281  | 40      | 985201        | 2008-10-27  | ['60-minutes-or-less', 'time-to-make', ...]         | [138.4, 10.0, 50.0, 3.0, 3.0, 19.0, 6.0]   | 10    | These are the most chocolatey, moist, ...  | ['bittersweet chocolate', 'unsalted ...] | 9              | 386585.0 | 333281.0  | 2008-11-19 | 4.0    | These were pretty good, but took fore...  | 4.0        |
+| 1     | 1 in Canada chocolate chip cookies     | 453467  | 45      | 1848091       | 2011-04-11  | ['60-minutes-or-less', 'time-to-make', ...]         | [595.1, 46.0, 211.0, 22.0, 13.0, 51.0, 26.0] | 12    | This is the recipe that we use at my ...  | ['white sugar', 'brown sugar', 'salt', ...] | 11             | 424680.0 | 453467.0  | 2012-01-26 | 5.0    | Originally I was gonna cut the recipe ... | 5.0        |
+| 2     | 412 broccoli casserole                 | 306168  | 40      | 50969         | 2008-05-30  | ['60-minutes-or-less', 'time-to-make', ...]         | [194.8, 20.0, 6.0, 32.0, 22.0, 36.0, 3.0]   | 6     | Since there are already 411 recipes f...  | ['frozen broccoli cuts', 'cream of ...] | 9              | 29782.0  | 306168.0  | 2008-12-31 | 5.0    | This was one of the best broccoli cas... | 5.0        |
+| 3     | 412 broccoli casserole                 | 306168  | 40      | 50969         | 2008-05-30  | ['60-minutes-or-less', 'time-to-make', ...]         | [194.8, 20.0, 6.0, 32.0, 22.0, 36.0, 3.0]   | 6     | Since there are already 411 recipes f...  | ['frozen broccoli cuts', 'cream of ...] | 9              | 1196280.0| 306168.0  | 2009-04-13 | 5.0    | I made this for my son's first birthd... | 5.0        |
+| 4     | 412 broccoli casserole                 | 306168  | 40      | 50969         | 2008-05-30  | ['60-minutes-or-less', 'time-to-make', ...]         | [194.8, 20.0, 6.0, 32.0, 22.0, 36.0, 3.0]   | 6     | Since there are already 411 recipes f...  | ['frozen broccoli cuts', 'cream of ...] | 9              | 768828.0 | 306168.0  | 2013-08-02 | 5.0    | Loved this. Be sure to completely tha... | 5.0        |
+- `recipe_rating`
+| Index  | recipe_id | rating | avg_rating | calories | total_fat | sugar  | sodium | protein | saturated_fat | carbohydrates |
+|--------|----------|--------|------------|----------|-----------|--------|--------|---------|---------------|---------------|
+| 230    | 360086   | 5.0    | 4.75       | 7016.6   | 652.0     | 2109.0 | 260.0  | 263.0   | 568.0         | 245.0         |
+| 231    | 360086   | 4.0    | 4.75       | 7016.6   | 652.0     | 2109.0 | 260.0  | 263.0   | 568.0         | 245.0         |
+| 232    | 360086   | 5.0    | 4.75       | 7016.6   | 652.0     | 2109.0 | 260.0  | 263.0   | 568.0         | 245.0         |
+| 233    | 360086   | 5.0    | 4.75       | 7016.6   | 652.0     | 2109.0 | 260.0  | 263.0   | 568.0         | 245.0         |
+| 330    | 356849   | 5.0    | 5.00       | 5213.9   | 404.0     | 1251.0 | 133.0  | 215.0   | 382.0         | 217.0         |
+| ...    | ...      | ...    | ...        | ...      | ...       | ...    | ...    | ...     | ...           | ...           |
+| 234180 | 505267   | 5.0    | 5.00       | 5808.2   | 481.0     | 1647.0 | 219.0  | 151.0   | 204.0         | 232.0         |
+| 234319 | 292835   | NaN    | NaN        | 4588.6   | 226.0     | 1501.0 | 141.0  | 178.0   | 213.0         | 253.0         |
+| 234374 | 529308   | 5.0    | 5.00       | 9282.1   | 136.0     | 340.0  | 715.0  | 746.0   | 142.0         | 583.0         |
+| 234375 | 529308   | 5.0    | 5.00       | 9282.1   | 136.0     | 340.0  | 715.0  | 746.0   | 142.0         | 583.0         |
+| 234376 | 529308   | 5.0    | 5.00       | 9282.1   | 136.0     | 340.0  | 715.0  | 746.0   | 142.0         | 583.0         |
 
 ### Univariate Analysis
 
