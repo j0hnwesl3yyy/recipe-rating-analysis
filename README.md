@@ -16,8 +16,6 @@ Understanding how carbohydrates and protein impact recipe ratings can provide va
 
 3. 🥦 Nutritionists & Dietitians – Understanding how people perceive high-carb, low-protein meals can provide insights into eating habits and public attitudes toward nutrition. This can help in designing dietary recommendations that are both healthy and well-received.
 
-Overall, by analyzing recipe ratings, we can find trends that help people make better food choices, guide businesses in developing better products, and improve our understanding of how nutrition influences preferences.
-
 The first dataframe (df) `recipes` was extracted from the **RAW_recipes.csv** file and it contains 83782 rows along with these columns listed below:
 
 | Column             | Description                                                                                                                                                                                       |
@@ -47,11 +45,12 @@ The first dataframe (df) `reviews` was extracted from the **RAW_interaction.csv*
 
 The key columns relevant to our analysis include:
 
-`name` – The title of the recipe.
-`nutrition` – A list containing nutritional values such as calories, fat, sugar, sodium, protein, carbohydrates, and more.
-`rating` – The user rating given to the recipe.
-`recipe_id` – A unique identifier for each recipe.
-By leveraging statistical tests and visual analysis, we will determine whether high-carb, low-protein recipes are perceived differently by users, ultimately answering our question!
+- `name` – The title of the recipe.
+- `nutrition` – A list containing nutritional values such as calories, fat, sugar, sodium, protein, carbohydrates, and more.
+- `rating` – The user rating given to the recipe.
+- `recipe_id` – A unique identifier for each recipe.
+
+Overall, by analyzing recipe ratings, we can find trends that help people make better food choices, guide businesses in developing better products, and improve our understanding of how nutrition influences preferences!
 
 ## Data Cleaning and Exploratory Data Analysis
 
