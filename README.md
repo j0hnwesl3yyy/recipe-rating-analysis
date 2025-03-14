@@ -114,18 +114,43 @@ For data cleaning, to make our analysis more efficient and valid to use, we did 
 ### Univariate Analysis
 
 <iframe
-  src="assets/protein_prop_histogram.html"
+  src="assets/dist_avg_rating_histogram.html"
   width="800"
   height="600"
   frameborder="0"
 ></iframe>
 
-### Bivariate Analysis
-
-For this analysis, we examined the distribution of the rating of the recipe conditioned between the sugary recipes and non-sugary recipes. The graph below shows that recipes with rating of 3, 4 and 5 are more likely to be non-sugary recipes while the recipes with rating of 1 and 2 are more likely to be sugary recipes. We would dive deeper to see if the difference in these proportions are significant in later sections.
+<iframe
+  src="assets/dist_carb_prop_histogram.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
 
 <iframe
-  src="assets/bivariate.html"
+  src="assets/dist_protein_prop_histogram.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+
+<iframe
+  src="assets/dist_highcarb_lowprotein_histogram.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+### Bivariate Analysis
+
+<iframe
+  src="assets/carb_corp_heat.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+
+<iframe
+  src="assets/protein_prop_heat.html"
   width="800"
   height="600"
   frameborder="0"
@@ -133,30 +158,6 @@ For this analysis, we examined the distribution of the rating of the recipe cond
 
 ### Interesting Aggregates
 
-For this section, we investigated the relationship between the cooking time in minutes and proportion of sugar of the recipes. First, we created a small dataframe, `'filter_df'` to store the cooking time in minutes without outliers. We identified the outliers using the IQR method. After grouping the cooking time and proportion of sugar in a pivot table shown below, we created a data visualization to understand it better.
-
-| minutes | ('mean', 'prop_sugar') | ('median', 'prop_sugar') | ('min', 'prop_sugar') | ('max', 'prop_sugar') |
-| ------: | ---------------------: | -----------------------: | --------------------: | --------------------: |
-|       0 |              0.0137804 |                0.0137804 |             0.0137804 |             0.0137804 |
-|       1 |                0.29681 |                 0.212177 |                     0 |               1.02985 |
-|       2 |               0.316258 |                  0.25641 |                     0 |               1.06358 |
-|       3 |               0.279901 |                  0.19305 |                     0 |               1.03192 |
-|       4 |               0.276908 |                 0.235205 |                     0 |               1.04322 |
-|     ... |                    ... |                      ... |                   ... |                   ... |
-|     115 |               0.132994 |                0.0705617 |                     0 |              0.955342 |
-|     116 |                 0.2303 |                   0.2303 |              0.133949 |              0.326652 |
-|     117 |              0.0412412 |                0.0412412 |             0.0412412 |             0.0412412 |
-|     118 |               0.378571 |                 0.378571 |              0.378571 |              0.378571 |
-|     120 |               0.145882 |                0.0628323 |                     0 |               1.01558 |
-
-Interestingly, the graph shows that as the cooking time increases the proportion of sugar in a recipe fluctuates more and more. According to the plot, tecipes take a long time could be either sugary or savory dishes. Also, the shapes of the line for mean and median looks very similar, especially for the recipes with shorter cooking time.
-
-<iframe
-  src="assets/interesting_agg.html"
-  width="800"
-  height="600"
-  frameborder="0"
-></iframe>
 
 ## Assessment of Missingness
 
