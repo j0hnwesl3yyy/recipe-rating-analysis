@@ -1,4 +1,4 @@
-# Macronutrients & Ratings: The Impact of Carbs and Protein on Recipe Popularity
+# Macronutrients & Ratings: The Impact of Carbs and Protein on Recipe Ratings
 
 Authors: Ananya Krishnan and JohnWesley Pabalate 
 
