@@ -2,14 +2,23 @@
 
 Authors: Ananya Krishnan and JohnWesley Pabalate 
 
-## Overview
-
-This data science project, conducted at UCSD, focus on exploring the relationship between the rating of a recipe and the proportion of sugar contributing to the total calories of the given recipe.
-
 ## Introduction
+Food and nutrition play a crucial role in people’s choices when selecting recipes. Some individuals may prefer high-carb meals, while others prioritize protein-rich options. But do these macronutrient differences influence how people rate recipes?
 
+In this project, we investigate whether high-carb, low-protein recipes receive significantly different ratings compared to other recipes.
 
-The first dataset, `recipe`, contains 83782 rows, indicating 83782 unique recipes, with 10 columns recording the following information:
+### Why Does This Matter?
+Understanding how carbohydrates and protein impact recipe ratings can provide valuable insights for different groups:
+
+1. 🍽️ Home Cooks & Food Influencers – Knowing which types of recipes get higher ratings can help in creating meals that people love. If high-carb, low-protein recipes are rated lower, food bloggers might adjust their ingredient choices to appeal to a wider audience.
+
+2. 🏪 Food Chains & Restaurants – Businesses can use this information to develop menus and packaged foods that match customer preferences. If people favor certain macronutrient combinations, companies can tailor their products to boost customer satisfaction.
+
+3. 🥦 Nutritionists & Dietitians – Understanding how people perceive high-carb, low-protein meals can provide insights into eating habits and public attitudes toward nutrition. This can help in designing dietary recommendations that are both healthy and well-received.
+
+Overall, by analyzing recipe ratings, we can find trends that help people make better food choices, guide businesses in developing better products, and improve our understanding of how nutrition influences preferences.
+
+The first dataframe (df) `recipes` was extracted from the **RAW_recipes.csv** file and it contains 83782 rows along with these columns listed below:
 
 | Column             | Description                                                                                                                                                                                       |
 | :----------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -26,7 +35,7 @@ The first dataset, `recipe`, contains 83782 rows, indicating 83782 unique recipe
 | `'ingredients'`    | Text for recipe ingredients                                                                                                                                                                       |
 | `'n_ingredients'`  | Number of ingredients in recipe                                                                                                                                                                   |
 
-The second dataset, `interactions`, contains 731927 rows and each row contains a review from the user on a specific recipe. The columns it includes are:
+The first dataframe (df) `reviews` was extracted from the **RAW_interaction.csv** file and it contains 83782 rows along with these columns listed below:
 
 | Column        | Description         |
 | :------------ | :------------------ |
@@ -36,9 +45,13 @@ The second dataset, `interactions`, contains 731927 rows and each row contains a
 | `'rating'`    | Rating given        |
 | `'review'`    | Review text         |
 
-**Given the datasets, we are investigating whether people rate sugary recipes and the non-sugary recipes on the same scale.** To facilitate the investigation of our question, we separated the values in the `'nutrition'` columns into the corresponding columns,`'calories (#)'`, `'total fat (PDV)'`, `'sugar (PDV)'`, etc. PDV, or percent daily value shows how much a nutrient in a serving of food contributes to a total daily diet. Moreover, we calculated the proportion of sugar in terms of calories out of the total calories of a given recipe and stored the information in a new column, `'prop_sugar'`. because sugary in here will be referring to the recipes with value `'prop_sugar'` higher than the average `'prop_sugar'`. The most relevant columns to answer our question are `'calories(#)'`, `'sugar (PDV)'`, `'prop_sugar'`, described above, `'rating'`, which is the rating that user gave on a recipe, and `'average rating'`, which are the average of the ratings on each unique recipes.
+The key columns relevant to our analysis include:
 
-By seeking an answer to our question, we would have an insight on people’s preference on sugary recipes, which could help contributors on Food.com revise and improve their recipes to align with the public’s interests. In addition, the new pieces of information could lead to future work on diving deeper into how much awareness people have on the negative health effects of sweets.
+`name` – The title of the recipe.
+`nutrition` – A list containing nutritional values such as calories, fat, sugar, sodium, protein, carbohydrates, and more.
+`rating` – The user rating given to the recipe.
+`recipe_id` – A unique identifier for each recipe.
+By leveraging statistical tests and visual analysis, we will determine whether high-carb, low-protein recipes are perceived differently by users, ultimately answering our question!
 
 ## Data Cleaning and Exploratory Data Analysis
 
