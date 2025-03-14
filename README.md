@@ -7,7 +7,7 @@ Food and nutrition play a significant role in people’s choices when selecting 
 
 In this project, we will investigate whether high-carb, low-protein recipes receive significantly different ratings compared to other recipes.
 
-### Why Does This Matter 🤔?
+### 🤔 Why Does This Matter?
 Understanding how carbohydrates and protein impact recipe ratings can provide valuable insights for different groups:
 
 1. 🍽️ Home Cooks & Food Influencers – Knowing which types of recipes get higher ratings can help in creating meals that people love. If high-carb, low-protein recipes are rated lower, food bloggers might adjust their ingredient choices to appeal to a wider audience.
@@ -107,19 +107,8 @@ For data cleaning, to make our analysis more efficient and valid to use, we did 
 
 
 #### Result
-- `merged_df`.head()
-| Index | Recipe Name                              | Recipe ID | Rating | Avg Rating | Calories | Protein | Carbohydrates|
-|-------|------------------------------------------|-----------|--------|------------|----------|---------|--------------|
-| 0     | 1 brownies in the world best ever        | 333281    | 4.0    | 4.0        | 138.4    | 3.0     | 6.0          |
-| 1     | 1 in Canada chocolate chip cookies       | 453467    | 5.0    | 5.0        | 595.1    | 13.0    | 26.0         |
-| 2     | 412 broccoli casserole                   | 306168    | 5.0    | 5.0        | 194.8    | 22.0    | 3.0          |
-| 3     | 412 broccoli casserole                   | 306168    | 5.0    | 5.0        | 194.8    | 22.0    | 3.0          |
-| 4     | 412 broccoli casserole                   | 306168    | 5.0    | 5.0        | 194.8    | 22.0    | 3.0          |
+⭐️I DON'T KNOW HOW TO PUT the df.head() for recipe_ratings and the merged_df
 
-
-- `recipe_rating`.head()
-
-- 
 ### Univariate Analysis
 
 For this analysis, we examined the distribution of the proportion of sugar in a recipe. As the plot below shows, the distribution skewed to the right, indicating that most of the recipes on food.com have a low proportion of sugar. There is also a decreasing trend, indicating that as the proportion of sugar in recipes gets higher, there are less of those recipes on food.com.
