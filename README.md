@@ -81,18 +81,19 @@ For data cleaning, to make our analysis more efficient and valid to use, we did 
      | `'review'`         | object      |
      
 
+
 2. **Fill all ratings of 0 with np.nan.**
 
   - Rating is scaled from 1 to 5, 1 meaning the lowest rating while 5 means the highest rating. We replace all 0s in the ratings column with NaN values. The 0 represents no rating given, but it will influence any calculations we perform with the ratings.
 
 
-4. **Calculate the average ratings for each recipe and store it in avg_recipe_ratings**
+3. **Calculate the average ratings for each recipe and store it in avg_recipe_ratings**
 
    - Merges the recipe_ratings dataframe with the avg_recipe_rating dataset to include the average rating of each recipe, creating a column for the average rating.
    - For the purposes of analyzing the missingness and baseline, created a copy of the recipe_rating dataframe.
      
 
-5. **Only wanted certain columns, so we only retrieved `id` (renamed to `recipe_id`), `rating`, `avg_rating`, and `nutrition`; dropping the other columns.**
+4. **Only wanted certain columns, so we only retrieved `id` (renamed to `recipe_id`), `rating`, `avg_rating`, and `nutrition`; dropping the other columns.**
    - |  Column            | Description |
      | :----------------- | :---------- |
      | `'recipe_id'`      | int64       |
@@ -100,8 +101,9 @@ For data cleaning, to make our analysis more efficient and valid to use, we did 
      | `'avg_rating'`     | float64     |
      | `'nutrition'`      | object      |
 
+
        
-6. **Observed that the `nutrition` column contains string format, so we converted so it becomes a list.**
+5. **Observed that the `nutrition` column contains string format, so we converted so it becomes a list.**
 
    - Separated each value in the list [calories (#), total fat (PDV), sugar (PDV), sodium (PDV), protein (PDV), saturated fat (PDV), carbohydrates (PDV)] to its category (column) by indexing the `nutrition` column. 
 
