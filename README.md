@@ -113,8 +113,6 @@ For data cleaning, to make our analysis more efficient and valid to use, we did 
 
 ### Univariate Analysis
 
-For this analysis, we examined the distribution of the proportion of sugar in a recipe. As the plot below shows, the distribution skewed to the right, indicating that most of the recipes on food.com have a low proportion of sugar. There is also a decreasing trend, indicating that as the proportion of sugar in recipes gets higher, there are less of those recipes on food.com.
-
 <iframe
   src="assets/protein_prop_histogram.html"
   width="800"
