@@ -108,8 +108,8 @@ For data cleaning, to make our analysis more efficient and valid to use, we did 
 
 #### Result
 - `merged_df`.head()
-| Index | Recipe Name                                | Recipe ID | Rating | Avg Rating | Calories | Protein | Carbohydrates |
-|-------|-------------------------------------------|-----------|--------|------------|----------|---------|--------------|
+| Index | Recipe Name                              | Recipe ID | Rating | Avg Rating | Calories | Protein | Carbohydrates|
+|-------|------------------------------------------|-----------|--------|------------|----------|---------|--------------|
 | 0     | 1 brownies in the world best ever        | 333281    | 4.0    | 4.0        | 138.4    | 3.0     | 6.0          |
 | 1     | 1 in Canada chocolate chip cookies       | 453467    | 5.0    | 5.0        | 595.1    | 13.0    | 26.0         |
 | 2     | 412 broccoli casserole                   | 306168    | 5.0    | 5.0        | 194.8    | 22.0    | 3.0          |
@@ -118,20 +118,8 @@ For data cleaning, to make our analysis more efficient and valid to use, we did 
 
 
 - `recipe_rating`.head()
-| Index  | recipe_id| rating | avg_rating | calories | total_fat | sugar  | sodium | protein | saturated_fat | carbohydrates |
-|--------|----------|--------|------------|----------|-----------|--------|--------|---------|---------------|---------------|
-| 230    | 360086   | 5.0    | 4.75       | 7016.6   | 652.0     | 2109.0 | 260.0  | 263.0   | 568.0         | 245.0         |
-| 231    | 360086   | 4.0    | 4.75       | 7016.6   | 652.0     | 2109.0 | 260.0  | 263.0   | 568.0         | 245.0         |
-| 232    | 360086   | 5.0    | 4.75       | 7016.6   | 652.0     | 2109.0 | 260.0  | 263.0   | 568.0         | 245.0         |
-| 233    | 360086   | 5.0    | 4.75       | 7016.6   | 652.0     | 2109.0 | 260.0  | 263.0   | 568.0         | 245.0         |
-| 330    | 356849   | 5.0    | 5.00       | 5213.9   | 404.0     | 1251.0 | 133.0  | 215.0   | 382.0         | 217.0         |
-| ...    | ...      | ...    | ...        | ...      | ...       | ...    | ...    | ...     | ...           | ...           |
-| 234180 | 505267   | 5.0    | 5.00       | 5808.2   | 481.0     | 1647.0 | 219.0  | 151.0   | 204.0         | 232.0         |
-| 234319 | 292835   | NaN    | NaN        | 4588.6   | 226.0     | 1501.0 | 141.0  | 178.0   | 213.0         | 253.0         |
-| 234374 | 529308   | 5.0    | 5.00       | 9282.1   | 136.0     | 340.0  | 715.0  | 746.0   | 142.0         | 583.0         |
-| 234375 | 529308   | 5.0    | 5.00       | 9282.1   | 136.0     | 340.0  | 715.0  | 746.0   | 142.0         | 583.0         |
-| 234376 | 529308   | 5.0    | 5.00       | 9282.1   | 136.0     | 340.0  | 715.0  | 746.0   | 142.0         | 583.0         |
 
+- 
 ### Univariate Analysis
 
 For this analysis, we examined the distribution of the proportion of sugar in a recipe. As the plot below shows, the distribution skewed to the right, indicating that most of the recipes on food.com have a low proportion of sugar. There is also a decreasing trend, indicating that as the proportion of sugar in recipes gets higher, there are less of those recipes on food.com.
