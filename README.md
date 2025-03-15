@@ -253,6 +253,14 @@ The bottom 25th percentile for the proportion of calories from protein.
 
 ## Framing a Prediction Problem
 
+We plan to predict the average rating of a recipe. This would be a regression type of problem since average ratings are continuous numerical values. While an individual may leave an exact star rating, the average rating of a recipe is often a reflection of several users' preferences. 
+
+We chose average rating because it is the best representation of perception of a rating. It can indicate the quality of a recipe and is what most people assess when trying to find a recipe. From our previous analyses, we found that carbohydrate and protein content of recipes significantly influence their ratings and we may be able to use this information to predict the ratings. 
+
+To evaluate our model, we will use Mean Absolute Error (MAE) since it measures the average magnitude of errors in predictions without considering their direction, making it easy to interpret in the context of recipe ratings. It penalizes large errors linearly, unlike Mean Squared Error (MSE), which squares large errors and can be overly sensitive to outliers.
+Since our prediction task involves real-valued ratings, classification metrics like accuracy or F1-score are not relevant. We also report R² (coefficient of determination) as a secondary metric to indicate how well our model explains variance in ratings.
+
+The information available at the time of prediction would be all the columns from the `recipes` and `reviews` datasets, along with any new columns we have made engineered from the existing ones. `ratings` and `avg_ratings` will be removed so that the model only relies on this information. 
 
 ## Baseline Model
 
