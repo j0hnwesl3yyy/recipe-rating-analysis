@@ -175,74 +175,50 @@ Three columns, `'date'`, `'rating'`, and `'review'`, in the merged dataset have 
 
 We believe that the missingness of the `'review'` column is NMAR, because if people feel indifferent about the recipe, they are less likely to leave a review for it since they would feel like they have nothing significant to talk about. People usually will leave a review only if they have stronger emotions towards the recipe. Their emotions would motivate them to go onto the page, click multiple buttons to leave, and take some time out of their day to write a review. For example, people who enjoyed the recipe would be willing to do all the work to leave a good review for the recipe.
 
+
 ### Missingness Dependency
-
-We moved on to examine the missingness of `'rating'` in the merged DataFrame by testing the dependency of its missingness. We are investigating whether the missiness in the `'rating'` column depends on the column `'prop_sugar'`, which is the proportion of sugar out of the total calories, or the column `'n_steps'`, which is the number of steps of the recipe.
-
-> Proportion of Sugar and Rating
-
-**Null Hypothesis:** The missingness of ratings does not depend on the proportion of sugar in the recipe.
-
-**Alternate Hypothesis:** The missingness of ratings does depend on the proportion of sugar in the recipe.
-
-**Test Statistic:** The absolute difference of mean in the proportion of sugar of the distribution of the group without missing ratings and the distribution of the group without missing ratings.
-
-**Significance Level:** 0.05
-
 <iframe
-  src="assets/distr_rating_sugar.html"
+  src="assets/rating_review_missing_bar_chart.html"
   width="800"
   height="600"
   frameborder="0"
 ></iframe>
 
-We ran a permutation test by shuffling the missingness of rating for 1000 times to collect 1000 simulating mean differences in the two distributions as described in the test statistic.
-
 <iframe
-  src="assets/empirical_diff_sugar.html"
+  src="assets/review_rating_kde.html"
   width="800"
   height="600"
   frameborder="0"
 ></iframe>
 
-The **observed statistic** of **0.0063** is indicated by the red vertical line on the graph. Since the **p_value** that we found **(0.0)** is < 0.05 which is the significance level that we set, we **reject the null hypothesis**. The missingness of `'rating'` does depend on the `'prop_sugar'`, which is proportion of sugar in the recipe.
-
-> Minutes and Rating
-
-**Null Hypothesis:** The missingness of ratings does not depend on the cooking time of the recipe in minutes.
-
-**Alternate Hypothesis:** The missingness of ratings does depend on the cooking time of the recipe in minutes.
-
-**Test Statistic:** The absolute difference of mean in cooking time of the recipe in minutes of the distribution of the group without missing ratings and the distribution of the group without missing ratings.
-
-**Significance Level:** 0.05
-
 <iframe
-  src="assets/empirical_diff_prescale.html"
+  src="assets/tvd1_distribution.html"
   width="800"
   height="600"
   frameborder="0"
 ></iframe>
 
-Due to the outliers in cooking time, it is difficult to identify the shapes of the two distributions, so we update the scale to take a closer look.
 
 <iframe
-  src="assets/distr_rating_minutes.html"
+  src="assets/n_steps_kde.html"
   width="800"
   height="600"
   frameborder="0"
 ></iframe>
 
-We ran another permutation test by shuffling the missingness of rating for 1000 times to collect 1000 simulating mean differences in the two distributions as described in the test statistic.
-
 <iframe
-  src="assets/empirical_diff_minutes.html"
+  src="assets/nsteps_review_missing_bar_chart.html"
   width="800"
   height="600"
   frameborder="0"
 ></iframe>
 
-The **observed statistic** of **51.4524** is indicated by the red vertical line on the graph. Since the **p-value** that we found **(0.123)** is > 0.05 which is the significance level that we set, we **fail to reject the null hypothesis**. The missingness of rating does not depend on the cooking time in minutes of the recipe.
+<iframe
+  src="assets/tvd2_distribution.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
 
 ## Hypothesis Testing
 
