@@ -191,7 +191,7 @@ Three columns, `'date'`, `'rating'`, and `'review'`, in the merged dataset have 
 
 
 ### NMAR Analysis & Missingness Dependency
-After merging the two dataframes together, we were left with three columns with an abundant amount of missing values. Those three columns are rating, review, and description. Among the three columns with missing values—description (114 missing), rating (15,035 missing), and review (57 missing), the most likely NMAR (Not Missing at Random) column is review.
+After merging the two dataframes together, we were left with three columns with an abundant amount of missing values. Those three columns are `rating`, `review`, and `description`. Among the three columns with missing values `description` (114 missing), `rating` (15,035 missing), and `review` (57 missing), the most likely NMAR (Not Missing at Random) column is review.
 
 Missingness in review is significant, and a key reason for this could be that users choose whether or not to leave a review based on their experience with the recipe. If users only write reviews when they feel strongly about a recipe—either positively or negatively—then the missing reviews are likely not missing randomly, but rather dependent on the sentiment of the review itself (which we cannot observe for missing cases). This makes review a strong NMAR candidate because the likelihood of missingness is tied to unrecorded user opinions, meaning that the absence of a review may carry implicit information about user satisfaction or dissatisfaction.
 
