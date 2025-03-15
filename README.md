@@ -119,6 +119,7 @@ For data cleaning, to make our analysis more efficient and valid to use, we did 
   height="600"
   frameborder="0"
 ></iframe>
+With the distribution of average recipe ratings, with the majority of ratings concentrated at the higher end, particularly around 5. Since this histogram is skewed to the left, it suggests that most recipes receive very positive ratings, while lower ratings are significantly less common.
 
 <iframe
   src="assets/dist_carb_prop_histogram.html"
@@ -126,6 +127,7 @@ For data cleaning, to make our analysis more efficient and valid to use, we did 
   height="600"
   frameborder="0"
 ></iframe>
+With the distribution of carbohydrate proportions in recipes, with most recipes having a relatively low carbohydrate proportion, approximately between 0 and 0.3. The peak around 0.1–0.2 suggests that a significant number of recipes contain moderate carbohydrate content, and higher proportions are minimally present.
 
 <iframe
   src="assets/dist_protein_prop_histogram.html"
@@ -133,6 +135,7 @@ For data cleaning, to make our analysis more efficient and valid to use, we did 
   height="600"
   frameborder="0"
 ></iframe>
+With the distribution of protein proportions in recipes, with most values concentrated between 0.1 and 0.3. The distribution is right skewed, meaning there are fewer recipes with very high protein proportions, but a small number extend towards the higher end.
 
 <iframe
   src="assets/dist_highcarb_lowprotein_histogram.html"
@@ -140,7 +143,7 @@ For data cleaning, to make our analysis more efficient and valid to use, we did 
   height="600"
   frameborder="0"
 ></iframe>
-
+With the distribution of recipes classified as high-carb and low-protein. The majority of recipes do not fall into this category, while only a small proportion are considered high-carb and low-protein, indicating that most recipes have a more balanced or different macronutrient composition.
 
 ### Bivariate Analysis
 
@@ -150,6 +153,7 @@ For data cleaning, to make our analysis more efficient and valid to use, we did 
   height="600"
   frameborder="0"
 ></iframe>
+This heatmap shows that most recipes have a low carbohydrate proportion and tend to receive high ratings (around 4 to 5 stars). Recipes with higher carbohydrate proportions are less common across all ratings, but the moderate level of carbohydrate proportions are more saturated with 5 star ratings.
 
 <iframe
   src="assets/protein_prop_heat.html"
@@ -157,6 +161,7 @@ For data cleaning, to make our analysis more efficient and valid to use, we did 
   height="600"
   frameborder="0"
 ></iframe>
+This heatmap shows that most recipes have a low to moderate protein proportion and tend to receive high ratings (around 4 to 5 stars). Recipes with very high protein proportions are less common across all rating levels, while low protein proportions tend to be more saturated with 5 star ratings.
 
 ### Interesting Aggregates
 
