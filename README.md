@@ -154,7 +154,7 @@ With the **distribution of recipes classified as high-carb and low-protein**. Th
   height="600"
   frameborder="0"
 ></iframe>
-This heatmap shows that most recipes have a low carbohydrate proportion and tend to receive high ratings (around 4 to 5 stars). Recipes with higher carbohydrate proportions are less common across all ratings, but the moderate level of carbohydrate proportions are more saturated with 5 star ratings.
+This heatmap shows that most recipes have a low carbohydrate proportion and tend to receive high ratings (around 4 to 5 stars). Recipes with higher carbohydrate proportions are less common across all ratings, but the moderate level of carbohydrate proportions is more saturated with 5 star ratings.
 
 <iframe
   src="assets/protein_prop_heat.html"
@@ -171,12 +171,10 @@ This heatmap shows that most recipes have a low to moderate protein proportion a
 
 Three columns, `'date'`, `'rating'`, and `'review'`, in the merged dataset have a significant amount of missing values, so we decided to assess the missingness on the dataframe.
 
-### NMAR Analysis
 
-We believe that the missingness of the `'review'` column is NMAR, because if people feel indifferent about the recipe, they are less likely to leave a review for it since they would feel like they have nothing significant to talk about. People usually will leave a review only if they have stronger emotions towards the recipe. Their emotions would motivate them to go onto the page, click multiple buttons to leave, and take some time out of their day to write a review. For example, people who enjoyed the recipe would be willing to do all the work to leave a good review for the recipe.
+### NMAR Analysis & Missingness Dependency
+After merging the two dataframes together, we were left with three columns with an abundant amount of missing values. Those three columns are `rating`, `review`, `descriptions`. Among the three columns with missing values—**`description` (114 missing), `rating` (15,035 missing), and `review` (57 missing)**, the most likely **NMAR (Not Missing at Random)** column is **`rating`**. Missingness in `rating` is substantial, and a key reason for this could be that users choose whether or not to rate a recipe based on their experience. If users only leave ratings when they strongly like or dislike a recipe, the missing ratings are likely **not missing randomly**, but rather **dependent on the rating itself** (which we cannot observe for missing cases). This makes `rating` a strong NMAR candidate because the likelihood of missingness is tied to the unrecorded rating values, meaning that missingness itself carries implicit information about user sentiment. **`description` could also be NMAR**, as some users may deliberately choose not to write a description, possibly due to lack of effort or because they believe it is unnecessary, though this is more speculative. On the other hand, **`review` is less likely NMAR** because the missingness of reviews is probably influenced by external factors such as user engagement levels or the rating system itself, making it more **MAR (Missing at Random)** rather than NMAR. Since the missingness in `review` does not necessarily depend on the content of the review itself, it is less indicative of NMAR behavior. Ultimately, **`rating` is the strongest NMAR candidate because its absence likely depends on the users' choice to rate, which is influenced by their personal experience with the recipe—something that is unobserved when the rating is missing.**
 
-
-### Missingness Dependency
 <iframe
   src="assets/rating_review_missing_bar_chart.html"
   width="800"
@@ -197,7 +195,8 @@ We believe that the missingness of the `'review'` column is NMAR, because if peo
   height="600"
   frameborder="0"
 ></iframe>
-
+**np.mean(np.array(tvds) >= observed_tvd) = np.float64(0.928)**
+The p-value (0.928) indicates that the observed TVD is not significantly different from what we’d expect under random chance. This suggests that review missingness is not dependent on rating. The distribution of missing vs. non-missing reviews appears random, with no strong pattern linked to rating values. Therefore, we fail to reject the null hypothesis, meaning review missingness does not systematically vary based on rating.
 
 <iframe
   src="assets/n_steps_kde.html"
@@ -222,34 +221,22 @@ We believe that the missingness of the `'review'` column is NMAR, because if peo
 
 ## Hypothesis Testing
 
-As mentioned in the introduction, we are curious about whether people rate sugary recipes and non-sugary recipes on the same scale. By sugary recipes, we are talking about recipes with a proportion of sugar higher than the average proportion of sugar. Proportion of sugar is referring to the values in `'prop_sugar'`, which are the proportion of sugar in calories out of the total calories of the recipe.
+Our goal is to see if carbohydrate and protein content affect ratings of recipes. We define high-carb, low-protein recipes as those that fall into both:
 
-To investigate the question, we ran a **permutation test** with the following hypotheses, test statistic, and significance level.
+The top 25th percentile for the proportion of calories from carbohydrates.
+The bottom 25th percentile for the proportion of calories from protein.
 
-**Null Hypothesis:** People rate all the recipes on the same scale.
+**Null Hypothesis (H₀):** Recipes with high carb % and low protein % receive the same ratings as other recipes.
 
-**Alternative Hypothesis:** People rate sugary recipes lower than non-sugary recipes.
+**Alternative Hypothesis (Hₐ):** Recipes with high carb % and low protein % receive significantly different ratings.
 
-**Test Statistic:** The difference in mean between rating of sugary recipes and non-sugary recipes.
+**Test statistic:** Mean difference in ratings between the high-carb, low-protein group and others.
 
-**Significance Level:** 0.05
+**Significance level:** 0.05
 
-The reason we chose to run a permutation test is because we do not have any information of any population, and we want to check if the two distributions look like they come from the same population. We proposed that **people rate the sugary recipes lower** because people might be concerned with the negative health risks relating to the recipe, and we would like to know all the opinions from the users, so we used rating instead of average rating of the recipes. For the test statistic, we chose the difference in mean of the ratings of two groups of recipes instead of absolute difference in mean. This is because we have a directional hypothesis, which is that people rate sugary recipes lower than other recipes. By looking at the difference in mean between the two groups, we can see what type of recipes typically have a higher rating, which answers our question.
+**With every run, the p-value (0.01) is always less than the significance level 0.05, so we will reject the null hypothesis.**
 
-To run the test, we first split the data points into two groups, sugary, which are recipes with proportion of sugar higher than the mean proportion of sugar, and the rest of the data points are in the non-sugary group. The **observed statistic** is **-0.0097**.
-
-Then we shuffled the ratings for 1000 times to collect 1000 simulating mean differences in the two distributions as described in the test statistic. We got a **p-value** of **0.001**.
-
-<iframe
-  src="assets/empirical_diff_rating.html"
-  width="800"
-  height="600"
-  frameborder="0"
-></iframe>
-
-#### Conclusion of Permutation Test
-
-Since the **p-value** that we found **(0.002)** is less than the significance level of 0.05, we **reject the null hypothesis**. People do not rate all the recipes on the same scale, and they tend to rate sugary recipes lower. One plausible explanation for this founding could be that people are concerned with health risks relating to sugary recipes, such as diabetes.
+**Justification:** Making it robust. The mean rating difference is a simple, clear measure that directly shows if high-carb, low-protein recipes get better or worse ratings than other recipes. Using the 25th percentiles gives us enough recipes in each group to make a fair comparison without cherry-picking data. The standard 0.05 significance level follows established scientific practice, and getting a p-value of 0.01 gives us strong confidence that our findings aren't just due to random chance. This approach ensures our conclusion about how carbs and protein affect recipe ratings is reliable and trustworthy.
 
 ## Framing a Prediction Problem
 
