@@ -105,11 +105,20 @@ For data cleaning, to make our analysis more efficient and valid to use, we did 
        
 5. **Observed that the `nutrition` column contains string format, so we converted so it becomes a list.**
 
-   - Separated each value in the list [calories (#), total fat (PDV), sugar (PDV), sodium (PDV), protein (PDV), saturated fat (PDV), carbohydrates (PDV)] to its category (column) by indexing the `nutrition` column. 
+   - Separated each value in the list [calories (#), total fat (PDV), sugar (PDV), sodium (PDV), protein (PDV), saturated fat (PDV), carbohydrates (PDV)] to its category (column) by indexing the `nutrition` column.
+
+6. **Quantile based method to get high carbs and low protein** 
 
 
 #### Result
-⭐️I DON'T KNOW HOW TO PUT the df.head() for recipe_ratings and the merged_df
+| recipe_id | rating | avg_rating | calories | total_fat | sugar | sodium | protein | saturated_fat | carbohydrates | carb_prop | protein_prop | high_carb_low_protein | shuffled_rating |
+|-----------|--------|------------|----------|-----------|-------|--------|---------|---------------|--------------|-----------|--------------|----------------------|----------------|
+| 333281    | 4.0    | 4.0        | 138.4    | 10.0      | 50.0  | 3.0    | 3.0     | 19.0          | 6.0          | 0.173410  | 0.086705     | False                | 4.461538       |
+| 453467    | 5.0    | 5.0        | 595.1    | 46.0      | 211.0 | 22.0   | 13.0    | 51.0          | 26.0         | 0.174761  | 0.087380     | False                | 5.000000       |
+| 306168    | 5.0    | 5.0        | 194.8    | 20.0      | 6.0   | 32.0   | 22.0    | 36.0          | 3.0          | 0.061602  | 0.451745     | False                | 4.916667       |
+| 306168    | 5.0    | 5.0        | 194.8    | 20.0      | 6.0   | 32.0   | 22.0    | 36.0          | 3.0          | 0.061602  | 0.451745     | False                | 5.000000       |
+| 306168    | 5.0    | 5.0        | 194.8    | 20.0      | 6.0   | 32.0   | 22.0    | 36.0          | 3.0          | 0.061602  | 0.451745     | False                | 4.777778       |
+
 
 ### Univariate Analysis
 
