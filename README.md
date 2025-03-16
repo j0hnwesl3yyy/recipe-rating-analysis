@@ -84,7 +84,7 @@ For data cleaning, to make our analysis more efficient and valid to use, we did 
 
 2. **Fill all ratings of 0 with np.nan.**
 
-  - Rating is scaled from 1 to 5, 1 meaning the lowest rating while 5 means the highest rating. We replace all 0s in the ratings column with NaN values. The 0 represents no rating given, but it will influence any calculations we perform with the ratings.
+    - Rating is scaled from 1 to 5, 1 meaning the lowest rating while 5 means the highest rating. We replace all 0s in the ratings column with NaN values. The 0 represents no rating given, but it will influence any calculations we perform with the ratings.
 
 
 3. **Calculate the average ratings for each recipe and store it in avg_recipe_ratings**
