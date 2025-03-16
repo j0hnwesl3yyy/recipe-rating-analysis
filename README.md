@@ -120,7 +120,7 @@ For data cleaning, to make our analysis more efficient and valid to use, we did 
 
 #### Result
 
-**recipe_ratings**
+**recipe_ratings.head()**
 
 | recipe_id | rating | avg_rating | calories | total_fat | sugar | sodium | protein | saturated_fat | carbohydrates| carb_prop | protein_prop |high_carb_low_protein | 
 |:----------|:-------|:-----------|:---------|:----------|:------|:-------|:--------|:--------------|:-------------|:----------|:-------------|:---------------------|
