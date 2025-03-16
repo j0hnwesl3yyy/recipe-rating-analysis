@@ -3,7 +3,7 @@
 Authors: Ananya Krishnan and JohnWesley Pabalate 
 
 ## Introduction
-**Question:Do high-carb, low-protein recipes receive significantly different ratings compared to other recipes?**
+**Question: Do high-carb, low-protein recipes receive significantly different ratings compared to other recipes?**
 
 Food and nutrition play a significant role in people’s choices when selecting recipes. Some individuals may prefer high-carb meals, while others prioritize protein-rich options. But do these macronutrient differences influence how people rate recipes?
 
