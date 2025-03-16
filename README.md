@@ -253,8 +253,8 @@ The empirical distribution of the Total Variation Distance (TVD) for Description
 
 Our goal is to see if carbohydrate and protein content affect ratings of recipes. We define high-carb, low-protein recipes as those that fall into both:
 
-The top 25th percentile for the proportion of calories from carbohydrates.
-The bottom 25th percentile for the proportion of calories from protein.
+- The top 25th percentile for the proportion of calories from carbohydrates.
+- The bottom 25th percentile for the proportion of calories from protein.
 
 **Null Hypothesis (H₀):** Recipes with high carb proportion and low protein proportion receive the same ratings as other recipes.
 
@@ -264,9 +264,9 @@ The bottom 25th percentile for the proportion of calories from protein.
 
 **Significance level:** 0.05
 
-**With every run, the p-value (0.01) is always less than the significance level 0.05, so we will reject the null hypothesis.**
+**With every run, the p-value (0.001) is always less than the significance level 0.05, so we will reject the null hypothesis.**
 
-**Justification:** Making it robust. The mean rating difference is a simple, clear measure that directly shows if high-carb, low-protein recipes get better or worse ratings than other recipes. Using the 25th percentiles gives us enough recipes in each group to make a fair comparison without cherry-picking data. The standard 0.05 significance level follows established scientific practice, and getting a p-value of 0.01 gives us strong confidence that our findings aren't just due to random chance. This approach ensures our conclusion about how carbs and protein affect recipe ratings is reliable and trustworthy.
+**Justification:** Making it robust. The mean rating difference is a simple, clear measure that directly shows if high-carb, low-protein recipes get better or worse ratings than other recipes. Using the 25th percentiles gives us enough recipes in each group to make a fair comparison without cherry-picking data. The standard 0.05 significance level follows established scientific practice, and getting a p-value of 0.001 gives us strong confidence that our findings aren't just due to random chance. This approach ensures our conclusion about how carbs and protein affect recipe ratings is reliable and trustworthy.
 
 ## Framing a Prediction Problem
 
@@ -277,33 +277,39 @@ We chose average rating because it is the best representation of perception of a
 To evaluate our model, we will use Mean Absolute Error (MAE) since it measures the average magnitude of errors in predictions without considering their direction, making it easy to interpret in the context of recipe ratings. It penalizes large errors linearly, unlike Mean Squared Error (MSE), which squares large errors and can be overly sensitive to outliers.
 Since our prediction task involves real-valued ratings, classification metrics like accuracy or F1-score are not relevant. We also report R² (coefficient of determination) as a secondary metric to indicate how well our model explains variance in ratings.
 
-The information available at the time of prediction would be all the columns from the `recipes` and `reviews` datasets, along with any new columns we have made engineered from the existing ones. `ratings` and `avg_ratings` will be removed so that the model only relies on this information. 
+The information available at the time of prediction would be all the columns from the `recipes` and `reviews` datasets, along with any new columns we have made engineered from the existing ones. `'ratings'` and `'avg_ratings'` columns will be removed so that the model only relies on this information. 
 
 ## Baseline Model
 
-We used a Random Forest Regressor Model for our baseline. The features we used were 'minutes', containing quantitative and discrete values, '`n_ingredients'` - with quantitative and discrete values - and `'high_carb_low_protein'` - with categorical and nominal values since it is a binary feature. We converted the boolean values in `'high_carb_low_protein'` to the corresponding 0 or 1 integer by type casting, and then dropped all null values from the dataframe. Lastly, we standardized 'minutes' and '`n_ingredients'` using StandardScaler to ensure they were on a comparable scale.
+We used a Random Forest Regressor Model for our baseline. The features we used were `'minutes'`, containing quantitative and discrete values, `'n_ingredients'` - with quantitative and discrete values - and `'high_carb_low_protein'` - with categorical and nominal values since it is a binary feature. We converted the boolean values in `'high_carb_low_protein'` to the corresponding 0 or 1 integer by type casting, and then dropped all null values from the dataframe. Lastly, we standardized `'minutes'` and `'n_ingredients'` using StandardScaler to ensure they were on a comparable scale.
 
 The MAE of this model was 0.3269 and R² was 0.0246. This means that on average, our model is 0.3269 rating points off from the true average rating of a recipe, and that the model explains 2.46% of the variance in ratings. For scale, the worst possible MAE would be 4, since the ratings range from 1 to 5. This is a good starting point for the MAE but the R² could be improved by a lot.
 
 ## Final Model
 
-For our final model, we used the following features: 'high_carb_low_protein', 'steps_per_minute', 'carb_prop', and 'protein_prop'. These features were chosen based on insights from exploratory analysis, hypothesis testing, and bivariate relationships observed in the data.
+For our final model, we used the following features: `'high_carb_low_protein'`, `'steps_per_minute'`, `'carb_prop'`, and `'protein_prop'`. These features were chosen based on insights from exploratory analysis, hypothesis testing, and bivariate relationships observed in the data.
 
 - `'high_carb_low_protein'`:
-  This is a binary feature that indicates whether a recipe is high in carbohydrate content (top 25th percentile of carbohydrate proportions of calories) and low in protein content (bottom 25th percentile of protein proportions of calories). According to our hypothesis test performed earlier, recipes with high carb % and low protein % receive significantly different ratings, so we thought this feature might be a good predictor of ratings. Since this categorical feature captures a key trend in user preferences, we included it in our model without further transformation.
+  This is a binary feature that indicates whether a recipe is high in carbohydrate content (top 25th percentile of carbohydrate proportions of calories) and low in protein content (bottom 25th percentile of protein proportions of calories). According to our hypothesis test performed earlier, recipes with high carb proportion and low protein proportion receive significantly different ratings, so we thought this feature might be a good predictor of ratings. Since this categorical feature captures a key trend in user preferences, we included it in our model without further transformation.
 
 - `'steps_per_minute'`:
-  This column was created by dividing the n_steps by minutes for each recipe, and measures the number of steps per minute. In our aggregate analysis, we saw that cooking time as associated with higher protein. Considering the potential impact of high_carb_low_protein on ratings, we thought that `minutes` might be a suitable predictor as well. However we wanted to make this feature more robust after using it our baseline model. The number of steps per minute could reflect the complexity of a recipe and might require more focus, and could affect ratings. We standardized this feature using StandardScaler().
+  This column was created by dividing the n_steps by minutes for each recipe, and it measures the number of steps per minute. In our aggregate analysis, we saw that cooking time as associated with higher protein. Considering the potential impact of high_carb_low_protein on ratings, we thought that `minutes` might be a suitable predictor as well. However we wanted to make this feature more robust after using it our baseline model. The number of steps per minute could reflect the complexity of a recipe and might require more focus, which could affect ratings. We standardized this feature using StandardScaler().
 
 - `'carb_prop'`:
   This feature measures the proportion of calories from carbohydrates in a recipe. From our bivariate heatmap, we noticed that higher `'carb_prop'` was strongly associated with higher ratings. This is intuitive because most popular recipes like pizza, pasta and desserts are also high in carbohydrates. For numerical stability and better model performance, we standardized this feature using StandardScaler().
 
 - `'protein_prop'`:
-   This feature measures the proportion of calories from protein in a recipe. From our bivariate heatmap, we noticed that while 'protein_prop' was not as strongly correlated with ratings as carbohydrates, lower-protein recipes tended to cluster around higher ratings. This led us to believe that low protein content could be associated with higher ratings. This could be because typically indulgent meals are usually low in protein. Since the distribution of this feature varied widely, we standardized this feature using StandardScaler().
+   This feature measures the proportion of calories from protein in a recipe. From our bivariate heatmap, we noticed that while `'protein_prop'` was not as strongly correlated with ratings as carbohydrates, lower-protein recipes tended to cluster around higher ratings. This led us to believe that low protein content could be associated with higher ratings. This could be because typically indulgent meals are usually low in protein. Since the distribution of this feature varied widely, we standardized this feature using StandardScaler().
 
-We used Random Forest Regressor as our model because it captures non-linear relationships between features and ratings. It handles interactions between features without requiring explicit specification. It is robust to outliers and can model complex patterns in the data. It also provides feature importance scores, allowing us to interpret key predictors. We then conducted RandomizedSearchCV to tune the hyperparameters n_estimators - number of trees in the forest - (50, 100, 200), max_depth - maximum depth of each tree - (5, 10, 15), min_samples_split - minimum samples required to split an internal node - (2, 5, 10), min_samples_leaf - minimum samples required at a leaf node - (1, 2, 4). After running the hyperparameter search, the best-performing combination was 200 for n_estimators, 15 for max_depth, 2 for min_samples_split and 1 for min_samples_leaf.
+We used Random Forest Regressor as our model because it captures non-linear relationships between features and ratings. It handles interactions between features without requiring explicit specification. It is robust to outliers and can model complex patterns in the data. It also provides feature importance scores, allowing us to interpret key predictors. We then conducted RandomizedSearchCV to tune the hyperparameters: 
+- n_estimators - number of trees in the forest - (50, 100, 200)
+- max_depth - maximum depth of each tree - (5, 10, 15)
+- min_samples_split - minimum samples required to split an internal node - (2, 5, 10)
+- min_samples_leaf - minimum samples required at a leaf node - (1, 2, 4).
 
-The final model reduced MAE from 0.3269 to 0.3083, meaning our predictions are closer to actual ratings on average. The R² score improved from 0.0246 to 0.1227, meaning the final model explains 12.27% of the variance in recipe ratings, compared to just 2.46% in the baseline model.
+After running the hyperparameter search, the best-performing combination was 200 for n_estimators, 15 for max_depth, 2 for min_samples_split and 1 for min_samples_leaf.
+
+The final model reduced MAE from 0.3269 to 0.3083, meaning our predictions are closer to actual ratings by 0.0186 points on average. The R² score improved from 0.0246 to 0.1227, meaning the final model explains 12.27% of the variance in recipe ratings, compared to just 2.46% in the baseline model.
 
 After training our final Random Forest Regressor, we analyzed feature importance scores to understand which features had the most influence on predicting recipe ratings. The feature importance chart below shows the contribution of each feature in our model:
 
@@ -319,7 +325,7 @@ From the chart, we see that `'protein_prop'` and `'carb_prop'` were the most imp
 
 ## Fairness Analysis
 
-To evaluate whether our model exhibits bias in predicting recipe ratings based on carbohydrate proportion (`'carb_prop'`), we split recipes into two groups, high carb and low carb, at the mean. Once again, we used MAE as our metric since it measures the average prediction error in absolute terms. 
+To evaluate whether our model exhibits bias in predicting recipe ratings based on carbohydrate proportion (`'carb_prop'`), we split recipes into two groups–high carb and low carb–at the mean. Once again, we used MAE as our metric since it measures the average prediction error in absolute terms. 
 
 **Null Hypothesis (H₀):** The model is fair. Its MAE for high-carb and low-carb recipes is roughly the same, and any differences are due to random chance.
 
