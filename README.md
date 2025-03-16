@@ -93,7 +93,7 @@ For data cleaning, to make our analysis more efficient and valid to use, we did 
    - For the purposes of analyzing the missingness and baseline, created a copy of the recipe_rating dataframe.
      
 
-4. **Only wanted certain columns, so we only retrieved `id` (renamed to `recipe_id`), `rating`, `avg_rating`, and `nutrition`; focused data cleaning on these columns.**
+4. **Only needed certain columns for our analysis, so we  focused data cleaning on these columns: `id` (renamed to `recipe_id`), `rating`, `avg_rating`, and `nutrition`.**
 
    - |  Column            | Description |
      | :----------------- | :---------- |
@@ -108,7 +108,12 @@ For data cleaning, to make our analysis more efficient and valid to use, we did 
 
    - Separated each value in the list [calories (#), total fat (PDV), sugar (PDV), sodium (PDV), protein (PDV), saturated fat (PDV), carbohydrates (PDV)] to its category (column) by indexing the `nutrition` column.
 
-6. **Quantile based method to get high carbs and low protein** 
+6. **Quantile based method to get high carbs and low protein**
+
+   - Since our main question was about whether high carb, low protein recipes have higher ratings, we created a new column `'high_carb_low_protein'` that classified recipes by whether they met the following conditions or not:
+     1. Its proportion of calories from carbs (`'carb_prop'` value) is in the top 25th percentile.
+     2. Its proportion of calories from protein (`'protein_prop'` value) is in the bottom 25th percentile.
+   - We chose to define high carbohydrate and low protein in this way to balance the effect of calories, and since a fixed threshold would be arbitrary and might not reflect how recipes are distributed. By using percentiles, we can also ensure that the classification is adjusted for how calories are distributed across macronutrients in the dataset.
 
 
 #### Result
@@ -250,9 +255,9 @@ Our goal is to see if carbohydrate and protein content affect ratings of recipes
 The top 25th percentile for the proportion of calories from carbohydrates.
 The bottom 25th percentile for the proportion of calories from protein.
 
-**Null Hypothesis (H₀):** Recipes with high carb % and low protein % receive the same ratings as other recipes.
+**Null Hypothesis (H₀):** Recipes with high carb proportion and low protein proportion receive the same ratings as other recipes.
 
-**Alternative Hypothesis (Hₐ):** Recipes with high carb % and low protein % receive significantly different ratings.
+**Alternative Hypothesis (Hₐ):** Recipes with high carb proportion and low protein proportion receive significantly different ratings.
 
 **Test statistic:** Mean difference in ratings between the high-carb, low-protein group and others.
 
