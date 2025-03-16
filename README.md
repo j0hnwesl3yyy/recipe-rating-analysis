@@ -111,6 +111,7 @@ For data cleaning, to make our analysis more efficient and valid to use, we did 
 
 
 #### Result
+
 **recipe_ratings**
 | recipe_id | rating | avg_rating | calories | total_fat | sugar | sodium | protein | saturated_fat | carbohydrates | carb_prop | protein_prop | high_carb_low_protein | shuffled_rating |
 |-----------|--------|------------|----------|-----------|-------|--------|---------|---------------|--------------|-----------|--------------|----------------------|----------------|
@@ -286,7 +287,7 @@ For our final model, we used the following features: 'high_carb_low_protein', 's
 - `'steps_per_minute'`:
   This column was created by dividing the n_steps by minutes for each recipe, and measures the number of steps per minute. In our aggregate analysis, we saw that cooking time as associated with higher protein. Considering the potential impact of high_carb_low_protein on ratings, we thought that `minutes` might be a suitable predictor as well. However we wanted to make this feature more robust after using it our baseline model. The number of steps per minute could reflect the complexity of a recipe and might require more focus, and could affect ratings. We standardized this feature using StandardScaler().
 
-- `'carb_prop':
+- `'carb_prop'`:
   This feature measures the proportion of calories from carbohydrates in a recipe. From our bivariate heatmap, we noticed that higher `'carb_prop'` was strongly associated with higher ratings. This is intuitive because most popular recipes like pizza, pasta and desserts are also high in carbohydrates. For numerical stability and better model performance, we standardized this feature using StandardScaler().
 
 - `'protein_prop'`:
