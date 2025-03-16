@@ -184,6 +184,12 @@ This heatmap shows that most recipes have a low to moderate protein proportion a
 
 ### Interesting Aggregates
 
+<iframe
+  src="assets/aggregate_analysis.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
 
 ## Assessment of Missingness
 
@@ -267,7 +273,18 @@ The information available at the time of prediction would be all the columns fro
 
 ## Final Model
 
-
+<iframe
+  src="assets/feature_importance.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
 
 ## Fairness Analysis
 
+<iframe
+  src="assets/fairness_analysis.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
