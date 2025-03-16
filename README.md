@@ -313,7 +313,7 @@ After training our final Random Forest Regressor, we analyzed feature importance
   frameborder="0"
 ></iframe>
 
-From the chart, we see that `'protein_prop'` and `'carb_prop'` were the most important features, confirming our earlier analysis that nutritional composition strongly influences recipe ratings.
+From the chart, we see that `'protein_prop'` and `'carb_prop'` were the most important features, confirming our earlier analysis that nutritional composition strongly influences recipe ratings. However, `'high_carb_low_protein'` having so little importance tells us that carbohydrate and protein content contribute in different ways than we had originally expected.
 
 
 ## Fairness Analysis
