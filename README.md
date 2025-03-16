@@ -93,7 +93,8 @@ For data cleaning, to make our analysis more efficient and valid to use, we did 
    - For the purposes of analyzing the missingness and baseline, created a copy of the recipe_rating dataframe.
      
 
-4. **Only wanted certain columns, so we only retrieved `id` (renamed to `recipe_id`), `rating`, `avg_rating`, and `nutrition`; dropping the other columns.**
+4. **Only wanted certain columns, so we only retrieved `id` (renamed to `recipe_id`), `rating`, `avg_rating`, and `nutrition`; focused data cleaning on these columns.**
+
    - |  Column            | Description |
      | :----------------- | :---------- |
      | `'recipe_id'`      | int64       |
