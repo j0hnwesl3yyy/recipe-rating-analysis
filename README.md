@@ -120,14 +120,6 @@ For data cleaning, to make our analysis more efficient and valid to use, we did 
 | 306168    | 5.0    | 5.0        | 194.8    | 20.0      | 6.0   | 32.0   | 22.0    | 36.0          | 3.0          | 0.061602  | 0.451745     | False                | 5.000000       |
 | 306168    | 5.0    | 5.0        | 194.8    | 20.0      | 6.0   | 32.0   | 22.0    | 36.0          | 3.0          | 0.061602  | 0.451745     | False                | 4.777778       |
 
-**merged_df**
-| name                                       | id      | minutes | contributor_id | submitted   | tags                                                                 | nutrition                             | n_steps | steps                                                 | description                                   | ingredients                                         | n_ingredients | user_id  | recipe_id | date        | rating | review                                             | avg_rating |
-|--------------------------------------------|---------|---------|---------------|-------------|----------------------------------------------------------------------|----------------------------------------|---------|-----------------------------------------------------|-----------------------------------------------|--------------------------------------------------|--------------|----------|-----------|-------------|--------|-----------------------------------------------------|------------|
-| 1 brownies in the world best ever         | 333281  | 40      | 985201        | 2008-10-27  | ['60-minutes-or-less', 'time-to-make', 'course...']                  | [138.4, 10.0, 50.0, 3.0, 3.0, 19.0, 6.0]  | 10      | ['heat the oven to 350f and arrange the rack i...'] | these are the most; chocolatey, moist, rich, d... | ['bittersweet chocolate', 'unsalted butter', ...] | 9            | 386585.0 | 333281.0  | 2008-11-19  | 4.0    | These were pretty good, but took forever to ba... | 4.0        |
-| 1 in canada chocolate chip cookies        | 453467  | 45      | 1848091       | 2011-04-11  | ['60-minutes-or-less', 'time-to-make', 'cuisine...']                  | [595.1, 46.0, 211.0, 22.0, 13.0, 51.0, 26.0] | 12      | ['pre-heat oven the 350 degrees f', 'in a mixi...'] | this is the recipe that we use at my school ca... | ['white sugar', 'brown sugar', 'salt', 'margar...'] | 11           | 424680.0 | 453467.0  | 2012-01-26  | 5.0    | Originally I was gonna cut the recipe in half ... | 5.0        |
-| 412 broccoli casserole                    | 306168  | 40      | 50969         | 2008-05-30  | ['60-minutes-or-less', 'time-to-make', 'course...']                  | [194.8, 20.0, 6.0, 32.0, 22.0, 36.0, 3.0] | 6       | ['preheat oven to 350 degrees', 'spray a 2 qua...'] | since there are already 411 recipes for brocco... | ['frozen broccoli cuts', 'cream of chicken sou...'] | 9            | 29782.0  | 306168.0  | 2008-12-31  | 5.0    | This was one of the best broccoli casseroles t... | 5.0        |
-| 412 broccoli casserole                    | 306168  | 40      | 50969         | 2008-05-30  | ['60-minutes-or-less', 'time-to-make', 'course...']                  | [194.8, 20.0, 6.0, 32.0, 22.0, 36.0, 3.0] | 6       | ['preheat oven to 350 degrees', 'spray a 2 qua...'] | since there are already 411 recipes for brocco... | ['frozen broccoli cuts', 'cream of chicken sou...'] | 9            | 1196280.0 | 306168.0  | 2009-04-13  | 5.0    | I made this for my son's first birthday party ... | 5.0        |
-| 412 broccoli casserole                    | 306168  | 40      | 50969         | 2008-05-30  | ['60-minutes-or-less', 'time-to-make', 'course...']                  | [194.8, 20.0, 6.0, 32.0, 22.0, 36.0, 3.0] | 6       | ['preheat oven to 350 degrees', 'spray a 2 qua...'] | since there are already 411 recipes for brocco... | ['frozen broccoli cuts', 'cream of chicken sou...'] | 9            | 768828.0 | 306168.0  | 2013-08-02  | 5.0    | Loved this. Be sure to completely thaw the br... | 5.0        |
 
 ### Univariate Analysis
 
@@ -183,6 +175,16 @@ This heatmap shows that most recipes have a low carbohydrate proportion and tend
 This heatmap shows that most recipes have a low to moderate protein proportion and tend to receive high ratings (around 4 to 5 stars). Recipes with very high protein proportions are less common across all rating levels, while low protein proportions tend to be more saturated with 5 star ratings.
 
 ### Interesting Aggregates
+Here we investigated the relationship betweek cooking time and nutrition, specifically the carbohydrate and protein proportion of calories for recipes. First we split the `minutes` column into 4 time categories and created a new column called `cooking_time_category` to help broadly group the recipes. After grouping the recipes based on their cooking times and nutrition, we visualized the average carbohydrate proportions and protein proportions across time categories in a bar chart.
+
+|   | cooking_time_category | avg_rating | avg_carb_prop | avg_protein_prop | count  |
+| :-| :-------------------- | :--------- | :------------ | :--------------- | :----- |
+| 0 |         <30 min       |  4.694892  |   0.132713    |     0.265631	    | 104755 |
+| 1 |       30-60 min       |  4.666176  |   0.130299    |     0.314311	    | 68997  |
+| 2 |       60-120 min      |  4.676371  |   0.133485    |     0.303209	    | 31977  |
+| 3 |        120+ min       |  4.625074  |   0.128458    |     0.385989	    | 23318  |
+
+Interestingly, we saw that while carbohydrate content stayed relatively the same, protein content increased with cooking time. This could be bacause of certain meat heavy meals like barbeque to require a longer cooking time while simple carb based recipes are faster to prepare. Protein alo generally take longer to break down under heat so this plot aligns with that fact. 
 
 <iframe
   src="assets/aggregate_analysis.html"
@@ -203,7 +205,7 @@ Missingness in review is significant, and a key reason for this could be that us
 
 description could also be NMAR, as some users may deliberately choose not to write a description, possibly due to lack of effort or because they believe it is unnecessary, though this is more speculative. On the other hand, rating is less likely NMAR because the missingness of ratings is probably influenced by external factors such as whether a user engaged with the rating system at all, making it more MAR (Missing at Random) rather than NMAR. Since the missingness in rating does not necessarily depend on the content of the rating itself, it is less indicative of NMAR behavior.
 
-Therefore,r eview is the strongest NMAR candidate because its absence likely depends on the users' choice to leave a review, which is influenced by their personal experience with the recipe—something that is unobserved when the review is missing.
+Therefore, review is the strongest NMAR candidate because its absence likely depends on the users' choice to leave a review, which is influenced by their personal experience with the recipe—something that is unobserved when the review is missing.
 
 <iframe
   src="assets/review_missingness.html"
@@ -270,8 +272,31 @@ The information available at the time of prediction would be all the columns fro
 
 ## Baseline Model
 
+We used a Random Forest Regressor Model for our baseline. The features we used were 'minutes', containing quantitative and discrete values, '`n_ingredients'` - with quantitative and discrete values - and `'high_carb_low_protein'` - with categorical and nominal values since it is a binary feature. We converted the boolean values in `'high_carb_low_protein'` to the corresponding 0 or 1 integer by type casting, and then dropped all null values from the dataframe. Lastly, we standardized 'minutes' and '`n_ingredients'` using StandardScaler to ensure they were on a comparable scale.
+
+The MAE of this model was 0.3269 and R² was 0.0246. This means that on average, our model is 0.3269 rating points off from the true average rating of a recipe, and that the model explains 2.46% of the variance in ratings. For scale, the worst possible MAE would be 4, since the ratings range from 1 to 5. This is a good starting point for the MAE but the R² could be improved by a lot.
 
 ## Final Model
+
+For our final model, we used the following features: 'high_carb_low_protein', 'steps_per_minute', 'carb_prop', and 'protein_prop'. These features were chosen based on insights from exploratory analysis, hypothesis testing, and bivariate relationships observed in the data.
+
+- `'high_carb_low_protein'`:
+  This is a binary feature that indicates whether a recipe is high in carbohydrate content (top 25th percentile of carbohydrate proportions of calories) and low in protein content (bottom 25th percentile of protein proportions of calories). According to our hypothesis test performed earlier, recipes with high carb % and low protein % receive significantly different ratings, so we thought this feature might be a good predictor of ratings. Since this categorical feature captures a key trend in user preferences, we included it in our model without further transformation.
+
+- `'steps_per_minute'`:
+  This column was created by dividing the n_steps by minutes for each recipe, and measures the number of steps per minute. In our aggregate analysis, we saw that cooking time as associated with higher protein. Considering the potential impact of high_carb_low_protein on ratings, we thought that `minutes` might be a suitable predictor as well. However we wanted to make this feature more robust after using it our baseline model. The number of steps per minute could reflect the complexity of a recipe and might require more focus, and could affect ratings. We standardized this feature using StandardScaler().
+
+- `'carb_prop':
+  This feature measures the proportion of calories from carbohydrates in a recipe. From our bivariate heatmap, we noticed that higher `'carb_prop'` was strongly associated with higher ratings. This is intuitive because most popular recipes like pizza, pasta and desserts are also high in carbohydrates. For numerical stability and better model performance, we standardized this feature using StandardScaler().
+
+- `'protein_prop'`:
+   This feature measures the proportion of calories from protein in a recipe. From our bivariate heatmap, we noticed that while 'protein_prop' was not as strongly correlated with ratings as carbohydrates, lower-protein recipes tended to cluster around higher ratings. This led us to believe that low protein content could be associated with higher ratings. This could be because typically indulgent meals are usually low in protein. Since the distribution of this feature varied widely, we standardized this feature using StandardScaler().
+
+We used Random Forest Regressor as our model because it captures non-linear relationships between features and ratings. It handles interactions between features without requiring explicit specification. It is robust to outliers and can model complex patterns in the data. It also provides feature importance scores, allowing us to interpret key predictors. We then conducted RandomizedSearchCV to tune the hyperparameters n_estimators - number of trees in the forest - (50, 100, 200), max_depth - maximum depth of each tree - (5, 10, 15), min_samples_split - minimum samples required to split an internal node - (2, 5, 10), min_samples_leaf - minimum samples required at a leaf node - (1, 2, 4). After running the hyperparameter search, the best-performing combination was 200 for n_estimators, 15 for max_depth, 2 for min_samples_split and 1 for min_samples_leaf.
+
+The final model reduced MAE from 0.3269 to 0.3083, meaning our predictions are closer to actual ratings on average. The R² score improved from 0.0246 to 0.1227, meaning the final model explains 12.27% of the variance in recipe ratings, compared to just 2.46% in the baseline model.
+
+After training our final Random Forest Regressor, we analyzed feature importance scores to understand which features had the most influence on predicting recipe ratings. The feature importance chart below shows the contribution of each feature in our model:
 
 <iframe
   src="assets/feature_importance.html"
@@ -280,7 +305,20 @@ The information available at the time of prediction would be all the columns fro
   frameborder="0"
 ></iframe>
 
+From the chart, we see that `'protein_prop'` and `'carb_prop'` were the most important features, confirming our earlier analysis that nutritional composition strongly influences recipe ratings.
+
+
 ## Fairness Analysis
+
+To evaluate whether our model exhibits bias in predicting recipe ratings based on carbohydrate proportion (`'carb_prop'`), we split recipes into two groups, high carb and low carb, at the mean. Once again, we used MAE as our metric since it measures the average prediction error in absolute terms. 
+
+**Null Hypothesis (H₀):** The model is fair. Its MAE for high-carb and low-carb recipes is roughly the same, and any differences are due to random chance.
+
+**Alternative Hypothesis (Hₐ):** The model is unfair. It performs significantly better (lower MAE) for low-carb recipes compared to high-carb recipes.
+
+**Test statistic:** Difference in MAE between the two groups (MAE of low-carb recipes - MAE of high-carb recipes).
+
+**Significance level:** 0.05
 
 <iframe
   src="assets/fairness_analysis.html"
@@ -288,3 +326,5 @@ The information available at the time of prediction would be all the columns fro
   height="600"
   frameborder="0"
 ></iframe>
+
+We performed a permutation test with 1000 iterations to generate an empirical distribution of MAE differences under the null hypothesis. The observed difference in MAE was -0.0399, and the p-value was 0.00. Since the p-value was below the 0.05 threshold, we rejected the null hypothesis. This indicates that our model performs significantly better for recipes with low carbohydrate proportions compared to high-carb recipes.
