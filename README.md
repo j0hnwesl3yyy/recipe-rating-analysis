@@ -92,7 +92,6 @@ For data cleaning, to make our analysis more efficient and valid to use, we did 
 3. **Calculate the average ratings for each recipe and store it in avg_recipe_ratings**
 
    - Merges the recipe_ratings dataframe with the avg_recipe_rating dataset to include the average rating of each recipe, creating a column for the average rating.
-   - For the purposes of analyzing the missingness and baseline, created a copy of the recipe_rating dataframe.
      
 
 4. **Only needed certain columns for our analysis, so we  focused data cleaning on these columns: `id` (renamed to `recipe_id`), `rating`, `avg_rating`, and `nutrition`.**
